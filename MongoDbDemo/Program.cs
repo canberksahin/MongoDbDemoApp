@@ -12,51 +12,61 @@ namespace MongoDbDemo
         {
             MongoCRUD db = new MongoCRUD("AddressBook");
 
-            PersonModel person = new PersonModel
-            {
-                FirstName = "Aysenur",
-                LastName = "Şahin",
-                PrimaryAddress = new AddressModel
-                {
-                    StreetAdress = "Nazilli",
-                    State = "Türkiye",
-                    City = "Ankara",
-                    Zipcode = "06540"
-                }
-            };
-            PersonModel person2 = new PersonModel
-            {
-                FirstName = "Yeni",
-                LastName = "Şahin"
-            };
+            //PersonModel person = new PersonModel
+            //{
+            //    FirstName = "Aysenur",
+            //    LastName = "Şahin",
+            //    PrimaryAddress = new AddressModel
+            //    {
+            //        StreetAdress = "Nazilli",
+            //        State = "Türkiye",
+            //        City = "Ankara",
+            //        Zipcode = "06540"
+            //    }
+            //};
+            //PersonModel person2 = new PersonModel
+            //{
+            //    FirstName = "Yeni",
+            //    LastName = "Şahin"
+            //};
 
             //db.InsertRecord("Users", person);
             //db.InsertRecord("Users", person2);
 
-            //var recs = db.LoadRecords<PersonModel>("Users");
-            //foreach (var rec in recs)
-            //{
-            //    Console.WriteLine($"{rec.Id}: {rec.FirstName} {rec.LastName}");
+            var recs = db.LoadRecords<NameModel>("Users");
+            foreach (var rec in recs)
+            {
+                Console.WriteLine($" {rec.FirstName} {rec.LastName}");
 
-            //    if (rec.PrimaryAddress != null)
-            //    {
-            //        Console.WriteLine(rec.PrimaryAddress.City);
-            //    }
-            //    Console.WriteLine();
-            //}
+                Console.WriteLine();
+            }
 
 
 
-           var oneRec = db.LoadRecordById<PersonModel>("Users",new Guid("5f373d47-5cfd-41df-a1b7-f80cd340180c"));
-            Console.WriteLine(oneRec.FirstName);
+            //var oneRec = db.LoadRecordById<PersonModel>("Users",new Guid("5f373d47-5cfd-41df-a1b7-f80cd340180c"));
+            //Console.WriteLine(oneRec.FirstName);
 
-            oneRec.DateOfBirth = DateTime.Now;
-            db.UpsertRecord("Users", oneRec.Id, oneRec);
+            ////UPDATE
+            //oneRec.DateOfBirth = DateTime.Now;
+            //db.UpsertRecord("Users", oneRec.Id, oneRec);
+
+
+            ////DELETE
+            //db.DeleteRecord<PersonModel>("Users", oneRec.Id);
             Console.ReadLine();
         }
     }
 
-    public class PersonModel
+    public class NameModel
+    {
+        [BsonId]
+        public Guid Id { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+    }
+
+        public class PersonModel
     {
         [BsonId]
         public Guid Id { get; set; }
